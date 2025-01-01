@@ -4,3 +4,7 @@
     box-sizing: border-box;
 }
 
+button img{
+    height: 30px;
+    width: 30px;
+}

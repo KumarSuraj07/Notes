@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 
 // Setting up Parsers for form.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+const filesDirectory = path.join(__dirname, 'files');
 
 // Setting ejs for view engine, helps in rendering files.
 app.set('view engine', 'ejs');
@@ -34,6 +37,22 @@ app.post("/create", (req, res) => {
     fs.writeFile(`./files/${req.body.title.split(' ').join('')}.txt`, req.body.details, (err) => {
         res.redirect("/");
     })
+});
+
+// Route to delete a file (task)
+app.post('/delete', (req, res) => {
+    const taskName = req.body.taskName;
+
+    const filePath = path.join(filesDirectory, taskName);
+
+    // Check if the file exists and delete it
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        console.log(`${taskName} deleted.`);
+        res.status(200).send('Task deleted successfully.');
+    } else {
+        res.status(404).send('Task not found.');
+    }
 });
 
 app.listen(3000, () => {

@@ -27,9 +27,12 @@
             <% if(files.length > 0) { %>
                 <% files.forEach((val)=>{ %>
 
-                    <div class="task w-72 px-3 py-4 rounded-lg bg-zinc-800">
+                    <div class="task w-72 px-3 py-4 rounded-lg bg-zinc-800" id="card">
                         <h1 class="text-white text-2xl tracking-tighter"> <%= val %> </h1>
                         <a class="text-blue-500 inline-block mt-4" href="/file/<%= val %>">Read More</a>
+                        <button class="ml-20 rounded-lg bg-blue-400" onclick="delFunction('<%= val %>')" id="btn">
+                            <img src="https://png.pngtree.com/recommend-works/png-clipart/20240521/ourmid/pngtree-premium-simple-trash-icon-delete-png-image_12503501.png" alt="">
+                        </button>
                     </div>
 
                 <% }) %>
